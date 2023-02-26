@@ -81,6 +81,30 @@ gltfLoader.load("portal.glb", (gltf) => {
 	scene.add(gltf.scene)
 })
 
+const pointsParams = {
+	count: 500,
+	size: 10,
+}
+
+// points
+const positions = new Float32Array(pointsParams.count * 3)
+for (let i = 0; i < positions.length / 3; i++) {
+	const i3 = i * 3
+	positions[i3 + 0] = (Math.random() - 0.5) * pointsParams.size * 3
+	positions[i3 + 1] = (Math.random() - 0.5) * pointsParams.size
+	positions[i3 + 2] = (Math.random() - 0.5) * pointsParams.size
+}
+const pointsGeometry = new THREE.BufferGeometry()
+pointsGeometry.setAttribute("position", new THREE.BufferAttribute(positions, 3))
+
+const points = new THREE.Points(
+	pointsGeometry,
+	new THREE.PointsMaterial({
+		size: 0.02,
+	})
+)
+points.position.set(0, 5, -10)
+scene.add(points)
 /**
  * Sizes
  */
