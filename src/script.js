@@ -114,15 +114,23 @@ const camera = new THREE.PerspectiveCamera(
 	100
 )
 camera.position.x = 0
-camera.position.y = 1
-camera.position.z = 2
+camera.position.y = 0.3
+camera.position.z = 2.5
+
 scene.add(camera)
 
 // Controls
 const controls = new OrbitControls(camera, canvas)
 controls.enableDamping = true
+controls.enablePan = false
+controls.enableZoom = false
+controls.minAzimuthAngle = -0.25
+controls.maxAzimuthAngle = 0.25
+controls.minPolarAngle = 1.2
+controls.maxPolarAngle = 1.4
 
 /**
+ *
  * Renderer
  */
 const renderer = new THREE.WebGLRenderer({
@@ -140,9 +148,10 @@ const clock = new THREE.Clock()
 
 const tick = () => {
 	const elapsedTime = clock.getElapsedTime()
+	controls.update()
+	camera.lookAt(new THREE.Vector3(0, 1, -4))
 
 	// Update controls
-	controls.update()
 
 	// Render
 	renderer.render(scene, camera)
